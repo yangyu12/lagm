@@ -1,0 +1,52 @@
+{
+  "training_set_kwargs": {
+    "class_name": "training.dataset.DatasetGANDataset",
+    "rootdir": "./data/DatasetGAN/annotation",
+    "split": "train",
+    "obj_name": "face",
+    "img_size": [512, 512],
+    "convert_34to8": false
+  },
+  "validation_set_kwargs": {
+    "class_name": "training.dataset.DatasetGANDataset",
+    "rootdir": "./data/DatasetGAN/annotation",
+    "split": "test",
+    "obj_name": "face",
+    "img_size": [512, 512],
+    "convert_34to8": false
+  },
+  "G_kwargs": {
+    "class_name": "training.networks.StyleGANGenerator",
+    "generator_pt": "checkpoints/stylegan_pt/karras2019stylegan-celebahq-1024x1024.for_g_all.pt",
+    "img_resolution": 1024,
+    "w_avg_npy": "data/DatasetGAN/training_latent/face_34/avg_latent_stylegan1.npy",
+    "truncation_cutoff": 8
+  },
+  "A_kwargs": {
+    "class_name": "training.networks.FPNLabelBranch",
+    "tmp_channels": 128,
+    "num_layers": 3
+  },
+  "T_kwargs": {
+    "class_name": "training.transform.TransformPipe",
+    "resize": [512, 512]
+  },
+  "S_kwargs": {
+    "class_name": "training.networks.DeepLabv3",
+    "input_channels": 3
+  },
+  "A_opt_kwargs": {
+    "class_name": "torch.optim.SGD",
+    "lr": 1e-03,
+    "momentum": 0.9
+  },
+  "S_opt_kwargs": {
+    "class_name": "torch.optim.SGD",
+    "lr": 0.001,
+    "momentum": 0.9
+  },
+  "loss_kwargs": {
+    "class_name": "training.loss.GMLoss"
+  },
+  "gmparam_regex": ".*classifier.*"
+}

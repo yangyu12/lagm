@@ -1,0 +1,51 @@
+{
+  "training_set_kwargs": {
+    "class_name": "training.dataset.CelebAMaskDataset",
+    "rootdir": "./data/CelebAMask-HQ",
+    "split": "train",
+    "limit_size": 1500,
+    "img_size": [256, 256],
+    "aug": false,
+    "convert_19to8": true
+  },
+  "validation_set_kwargs": {
+    "class_name": "training.dataset.CelebAMaskDataset",
+    "rootdir": "./data/CelebAMask-HQ",
+    "split": "val",
+    "limit_size": 500,
+    "img_size": [256, 256],
+    "aug": false,
+    "convert_19to8": true
+  },
+  "G_kwargs": {
+    "class_name": "training.networks.SynDataGenerator",
+    "generator_pkl": "checkpoints/stylegan2/celeba0-28k-paper256-ada.pkl",
+    "truncation_cutoff": 8
+  },
+  "A_kwargs": {
+    "class_name": "training.networks.FPNLabelBranch",
+    "tmp_channels": 128,
+    "num_layers": 3
+  },
+  "T_kwargs": {
+    "class_name": "training.transform.TransformPipe"
+  },
+  "S_kwargs": {
+    "class_name": "training.networks.DeepLabv3",
+    "input_channels": 3
+  },
+  "A_opt_kwargs": {
+    "class_name": "torch.optim.SGD",
+    "lr": 1e-03,
+    "momentum": 0.9
+  },
+  "S_opt_kwargs": {
+    "class_name": "torch.optim.SGD",
+    "lr": 0.001,
+    "momentum": 0.9
+  },
+  "loss_kwargs": {
+    "class_name": "training.loss.GMLoss"
+  },
+  "gmparam_regex": ".*classifier.*"
+}

@@ -1,0 +1,57 @@
+{
+  "training_set_kwargs": {
+    "class_name": "training.dataset.CGPart",
+    "rootdir": "./data/CGPart_render/car",
+    "obj_name": "car",
+    "dst_shape": [256, 192],
+    "length": 1000,
+    "classes_version": "CGPart_car_simplified_v0",
+    "selected_models": [
+        "minivan", 
+        "suv",
+        "sedan",
+        "wagon"
+    ]
+  },
+  "validation_set_kwargs": {
+    "class_name": "training.dataset.CGPartReal",
+    "rootdir": "./data/CGPart_real",
+    "obj_name": "car",
+    "split": "val",
+    "short_side": 192,
+    "classes_version": "CGPart_car_simplified_v0"
+  },
+  "G_kwargs": {
+    "class_name": "training.networks.SynDataGenerator",
+    "generator_pkl": "checkpoints/stylegan2/stylegan2-car-config-f.pkl",
+    "truncation_cutoff": 8
+  },
+  "A_kwargs": {
+    "class_name": "training.networks.FPNLabelBranch",
+    "tmp_channels": 128,
+    "num_layers": 3
+  },
+  "T_kwargs": {
+    "class_name": "training.transform.TransformPipe",
+    "wide_crop": true,
+    "resize": [256, 192]
+  },
+  "S_kwargs": {
+    "class_name": "training.networks.DeepLabv3",
+    "input_channels": 3
+  },
+  "A_opt_kwargs": {
+    "class_name": "torch.optim.SGD",
+    "lr": 1e-03,
+    "momentum": 0.9
+  },
+  "S_opt_kwargs": {
+    "class_name": "torch.optim.SGD",
+    "lr": 0.001,
+    "momentum": 0.9
+  },
+  "loss_kwargs": {
+    "class_name": "training.loss.GMLoss"
+  },
+  "gmparam_regex": ".*classifier.*"
+}
